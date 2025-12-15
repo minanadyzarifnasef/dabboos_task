@@ -11,4 +11,6 @@ abstract class ApiService {
 
   @GET(ApiConstants.getFollowUpsList)
   Future<FollowUpResponse> getFollowUps();
+
+
 }
