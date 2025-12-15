@@ -37,4 +37,3 @@ Structure looks roughly like this:
 4. Run the app on your emulator or device!
 
 ---
-*Note: This project is a work in progress and while the architecture is solid, I'm still tweaking things here and there.*
