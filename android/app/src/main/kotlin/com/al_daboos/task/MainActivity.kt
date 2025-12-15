@@ -1,0 +1,5 @@
+package com.al_daboos.task
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
