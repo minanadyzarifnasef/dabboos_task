@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/theming/app_colors.dart';
+import '../../../../core/theming/app_dimens.dart';
+import '../../../../core/theming/app_text_styles.dart';
 import '../../logic/follow_up_cubit.dart';
 import '../../logic/follow_up_state.dart';
 import '../widgets/follow_up_card.dart';
@@ -37,9 +40,12 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text('app_title'.tr()),
+        title: Text(
+          'app_title'.tr(),
+          style: AppTextStyles.appBarTitle,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.language),
@@ -56,17 +62,17 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            padding: const EdgeInsets.fromLTRB(AppDimens.padding16, AppDimens.padding8, AppDimens.padding16, AppDimens.padding16),
             child: Row(
               children: [
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.cardBackground,
+                      borderRadius: BorderRadius.circular(AppDimens.radius12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
+                          color: AppColors.shadow,
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -76,22 +82,22 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                       onChanged: _onSearchChanged,
                       decoration: InputDecoration(
                         hintText: 'search_hint'.tr(),
-                        hintStyle: TextStyle(color: Colors.grey.shade400),
-                        prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
+                        hintStyle: TextStyle(color: AppColors.textLightGrey),
+                        prefixIcon: Icon(Icons.search, color: AppColors.textLightGrey),
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: AppDimens.padding16, vertical: 14),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppDimens.padding12),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(AppDimens.radius12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: AppColors.shadow,
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -107,7 +113,7 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                       return IconButton(
                         icon: Icon(
                           Icons.filter_list_rounded,
-                          color: currentFilter != null ? Colors.deepPurple : Colors.black54,
+                          color: currentFilter != null ? AppColors.primary : AppColors.textBlack.withValues(alpha: 0.54),
                         ),
                         onPressed: () => _showFilterModal(context, currentFilter),
                       );
@@ -127,9 +133,9 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-                        const SizedBox(height: 16),
-                        Text(message),
+                        Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                        const SizedBox(height: AppDimens.padding16),
+                        Text(message, style: AppTextStyles.font14GreyRegular),
                         TextButton(
                           onPressed: () => context.read<FollowUpCubit>().fetchFollowUps(),
                           child: Text('retry'.tr()),
@@ -146,7 +152,7 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                          context.read<FollowUpCubit>().fetchFollowUps();
                       },
                       child: ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 24),
+                        padding: const EdgeInsets.only(bottom: AppDimens.padding24),
                         itemCount: followUps.length,
                         itemBuilder: (context, index) {
                           return FollowUpCard(followUp: followUps[index]);
@@ -171,23 +177,19 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
           Icon(
             isSearchingOrFiltering ? Icons.search_off_rounded : Icons.assignment_turned_in_outlined,
             size: 64,
-            color: Colors.grey.shade300,
+            color: AppColors.textLightGrey,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.padding16),
           Text(
             isSearchingOrFiltering ? 'no_match'.tr() : 'no_follow_ups'.tr(),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade600,
-            ),
+            style: AppTextStyles.font18BlackSemiBold,
           ),
           if (isSearchingOrFiltering)
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: AppDimens.padding8),
               child: Text(
                 'adjust_filter'.tr(),
-                style: const TextStyle(color: Colors.grey),
+                style: AppTextStyles.font14GreyRegular,
               ),
             ),
         ],

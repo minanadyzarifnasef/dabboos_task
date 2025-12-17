@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/theming/app_colors.dart';
+import '../../../../core/theming/app_dimens.dart';
+import '../../../../core/theming/app_text_styles.dart';
 import '../../data/models/follow_up.dart';
 import 'status_badge.dart';
 import '../screens/follow_up_detail_loader_screen.dart';
@@ -29,11 +33,11 @@ class FollowUpCard extends StatelessWidget {
   Color _getTypeColor(FollowUpType type) {
     switch (type) {
       case FollowUpType.call:
-        return Colors.blue;
+        return AppColors.typeCall;
       case FollowUpType.meeting:
-        return Colors.purple;
+        return AppColors.typeMeeting;
       case FollowUpType.visit:
-        return Colors.red;
+        return AppColors.typeVisit;
     }
   }
 
@@ -51,13 +55,13 @@ class FollowUpCard extends StatelessWidget {
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.circular(AppDimens.radius16),
+          side: const BorderSide(color: AppColors.divider),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        color: Colors.white,
+        margin: const EdgeInsets.symmetric(horizontal: AppDimens.padding16, vertical: AppDimens.padding8),
+        color: AppColors.cardBackground,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppDimens.padding16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,10 +71,10 @@ class FollowUpCard extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(AppDimens.padding8),
                         decoration: BoxDecoration(
                           color: _getTypeColor(followUp.type).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(AppDimens.radius8),
                         ),
                         child: Icon(
                           _getTypeIcon(followUp.type),
@@ -78,26 +82,18 @@ class FollowUpCard extends StatelessWidget {
                           size: 20,
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: AppDimens.padding12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            followUp.customerName ?? 'Unknown Customer',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade600,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            followUp.customerName ?? 'unknown_customer'.tr(),
+                            style: AppTextStyles.font12GreyMedium,
                           ),
                           const SizedBox(height: 2),
                           Text(
                             followUp.title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+                            style: AppTextStyles.font16BlackBold,
                           ),
                         ],
                       ),
@@ -106,31 +102,24 @@ class FollowUpCard extends StatelessWidget {
                   StatusBadge(status: followUp.status),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppDimens.padding12),
               Text(
                 _parseHtmlString(followUp.description),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade700,
-                  height: 1.5,
-                ),
+                style: AppTextStyles.font14GreyRegular,
               ),
               if (followUp.scheduledDate != null) ...[
-                const SizedBox(height: 12),
-                Divider(color: Colors.grey.shade100),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppDimens.padding12),
+                const Divider(color: AppColors.divider),
+                const SizedBox(height: AppDimens.padding8),
                 Row(
                   children: [
-                    Icon(Icons.calendar_today_outlined, size: 14, color: Colors.grey.shade500),
+                    const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textGrey),
                     const SizedBox(width: 6),
                     Text(
-                      'Due: ${followUp.scheduledDate.toString().split(' ')[0]}', 
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade500,
-                      ),
+                      'due_date'.tr(args: [followUp.scheduledDate.toString().split(' ')[0]]), 
+                      style: AppTextStyles.font12GreyRegular,
                     ),
                   ],
                 ),

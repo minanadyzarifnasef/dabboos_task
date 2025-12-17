@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/theming/app_colors.dart';
+import '../../../../core/theming/app_dimens.dart';
+import '../../../../core/theming/app_text_styles.dart';
 import '../../data/models/follow_up.dart';
 import '../widgets/status_badge.dart';
 
@@ -13,9 +16,9 @@ class FollowUpDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text('follow_up_details'.tr()),
+        title: Text('follow_up_details'.tr(), style: AppTextStyles.appBarTitle),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
@@ -24,12 +27,12 @@ class FollowUpDetailScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(AppDimens.padding20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeaderCard(),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppDimens.padding20),
               _buildContentCard(),
             ],
           ),
@@ -41,13 +44,13 @@ class FollowUpDetailScreen extends StatelessWidget {
   Widget _buildHeaderCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppDimens.padding20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(AppDimens.radius20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.shadow,
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -70,33 +73,26 @@ class FollowUpDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppDimens.padding16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       followUp.customerName ?? 'unknown_customer'.tr(),
-                      style: GoogleFonts.inter(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                      style: AppTextStyles.font18BlackW600,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'id_label'.tr(args: [followUp.id.substring(0, 8)]),
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: Colors.grey.shade400,
-                      ),
+                      style: AppTextStyles.font12GreyRegular,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimens.padding24),
           Row(
             children: [
               _buildInfoChip(
@@ -107,7 +103,7 @@ class FollowUpDetailScreen extends StatelessWidget {
                 color: Colors.blue.shade50,
                 textColor: Colors.blue.shade700,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppDimens.padding12),
               _buildInfoChip(
                 icon: _getTypeIcon(followUp.type),
                 label: 'type_${followUp.type.name}'.tr(),
@@ -124,13 +120,13 @@ class FollowUpDetailScreen extends StatelessWidget {
   Widget _buildContentCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppDimens.padding24),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(AppDimens.radius20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.shadow,
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -144,25 +140,17 @@ class FollowUpDetailScreen extends StatelessWidget {
             children: [
               Text(
                 followUp.title,
-                style: GoogleFonts.inter(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+                style: AppTextStyles.font20BlackBold,
               ),
               StatusBadge(status: followUp.status),
             ],
           ),
-          const SizedBox(height: 16),
-          Divider(color: Colors.grey.shade100),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimens.padding16),
+          const Divider(color: AppColors.divider),
+          const SizedBox(height: AppDimens.padding16),
           HtmlWidget(
             followUp.description,
-            textStyle: GoogleFonts.inter(
-              fontSize: 15,
-              color: Colors.grey.shade700,
-              height: 1.6,
-            ),
+            textStyle: AppTextStyles.font14GreyRegular.copyWith(height: 1.6),
           ),
         ],
       ),
@@ -176,10 +164,10 @@ class FollowUpDetailScreen extends StatelessWidget {
     required Color textColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.padding8),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(AppDimens.radiusCircular),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
