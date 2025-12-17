@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import '../../features/follow_up/data/models/follow_up.dart';
 import '../../features/follow_up/data/models/follow_up_response.dart';
 import 'api_constants.dart';
 
@@ -11,6 +12,9 @@ abstract class ApiService {
 
   @GET(ApiConstants.getFollowUpsList)
   Future<FollowUpResponse> getFollowUps();
+
+  @GET(ApiConstants.getFollowUpDetails)
+  Future<FollowUp> getFollowUpDetails(@Path('id') String id);
 
 
 }

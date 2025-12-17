@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
-import '../../core/networking/dio_factory.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'core/networking/api_service.dart';
-import 'features/follow_up/data/repo/follow_up_repo.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'core/di/dependency_injection.dart';
 import 'features/follow_up/logic/follow_up_cubit.dart';
 import 'features/follow_up/ui/screens/follow_up_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DioFactory.getDio(); // Initialize Dio
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  await setupGetIt(); // Initialize DI
+  
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en', 'US'),
+      startLocale: const Locale('en', 'US'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,15 +30,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) {
-            final apiService = ApiService(DioFactory.dio!);
-            final repo = FollowUpRepo(apiService);
-            return FollowUpCubit(repo)..fetchFollowUps();
-          },
+          create: (context) => getIt<FollowUpCubit>()..fetchFollowUps(),
         ),
       ],
       child: MaterialApp(
-        title: 'Follow-Up Manager',
+        title: 'app_title'.tr(),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,

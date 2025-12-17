@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../logic/follow_up_cubit.dart';
 import '../../logic/follow_up_state.dart';
 import '../widgets/follow_up_card.dart';
@@ -38,7 +39,19 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: const Text('Follow-Ups'),
+        title: Text('app_title'.tr()),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              if (context.locale.languageCode == 'en') {
+                context.setLocale(const Locale('ar', 'EG'));
+              } else {
+                context.setLocale(const Locale('en', 'US'));
+              }
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -62,7 +75,7 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                     child: TextField(
                       onChanged: _onSearchChanged,
                       decoration: InputDecoration(
-                        hintText: 'Search by title or customer...',
+                        hintText: 'search_hint'.tr(),
                         hintStyle: TextStyle(color: Colors.grey.shade400),
                         prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
                         border: InputBorder.none,
@@ -119,7 +132,7 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
                         Text(message),
                         TextButton(
                           onPressed: () => context.read<FollowUpCubit>().fetchFollowUps(),
-                          child: const Text('Retry'),
+                          child: Text('retry'.tr()),
                         ),
                       ],
                     ),
@@ -162,7 +175,7 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            isSearchingOrFiltering ? 'No match found' : 'No follow-ups yet',
+            isSearchingOrFiltering ? 'no_match'.tr() : 'no_follow_ups'.tr(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -170,11 +183,11 @@ class _FollowUpListScreenState extends State<FollowUpListScreen> {
             ),
           ),
           if (isSearchingOrFiltering)
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'Try adjusting filters or search query',
-                style: TextStyle(color: Colors.grey),
+                'adjust_filter'.tr(),
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
         ],

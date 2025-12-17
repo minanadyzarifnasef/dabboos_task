@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../data/models/follow_up.dart';
 
 class StatusBadge extends StatelessWidget {
@@ -14,15 +15,15 @@ class StatusBadge extends StatelessWidget {
     switch (status) {
       case FollowUpStatus.completed:
         color = Colors.green.shade600;
-        text = 'Completed';
+        text = 'status_completed'.tr();
         break;
       case FollowUpStatus.scheduled:
         color = Colors.orange.shade600;
-        text = 'Scheduled';
+        text = 'status_scheduled'.tr();
         break;
       case FollowUpStatus.noStatus:
         color = Colors.grey.shade400;
-        text = 'No Status';
+        text = 'status_no_status'.tr();
         break;
     }
 

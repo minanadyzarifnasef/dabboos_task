@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../data/models/follow_up.dart';
 
 class FilterModal extends StatelessWidget {
@@ -26,9 +27,9 @@ class FilterModal extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Filter by Status',
-                style: TextStyle(
+              Text(
+                'filter_title'.tr(),
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -40,10 +41,10 @@ class FilterModal extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          _buildFilterOption(context, 'All', null),
-          _buildFilterOption(context, 'Completed', FollowUpStatus.completed),
-          _buildFilterOption(context, 'Scheduled', FollowUpStatus.scheduled),
-          _buildFilterOption(context, 'No Status', FollowUpStatus.noStatus),
+          _buildFilterOption(context, 'filter_all'.tr(), null),
+          _buildFilterOption(context, 'status_completed'.tr(), FollowUpStatus.completed),
+          _buildFilterOption(context, 'status_scheduled'.tr(), FollowUpStatus.scheduled),
+          _buildFilterOption(context, 'status_no_status'.tr(), FollowUpStatus.noStatus),
           const SizedBox(height: 24), // Add some bottom padding safely
         ],
       ),
